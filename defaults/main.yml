@@ -1,0 +1,116 @@
+---
+# defaults file for rhel
+
+# = [sub_default_target.yml] =======================================
+
+# Linux systemd default target.
+linux_general_default_target: multi-user.target
+
+# = [sub_files.yml] ================================================
+
+# Create linux file or directory.
+# [Example]
+# linux_general_files:
+#   - path: /data/cloaks
+#     owner: superman
+#     group: superman
+#     mode: "0755" 
+#     state: directory
+#
+# The 'mode' must be enclosed in quotes like "0655".
+# Select the 'state' value from the following.
+#  - touch:     Create an empty file if it does not exist.
+#  - directory: Create a directory if it does not exist.
+#  - absent:    Remove the file if it exists.
+linux_general_files: []
+
+# Create linux file link.
+# [Example]:
+# linux_general_file_links:
+#   - src: /usr/local/ext/nuclear_button.sh
+#     dest: /home/d.trump/nuclear_button.sh
+#     state: link
+# 
+# Select the 'state' value from the following.
+#  - link:    Create a symbolic link if it does not exist.
+#  - hard:    Create a hard link if it does not exist.
+#  - absent:  Remove the link if it exists.
+linux_general_file_links: []
+
+# = [sub_locale.yml] ================================================
+
+# defaults file for rhel sub_locale.yml tasks.
+linux_general_locale: en_US.utf-8
+
+# = [sub_mount.yml] =================================================
+
+# Linux filesystem mount settings.
+# [Example]
+# linux_general_mount:
+#   - path: /data
+#     src: 192.168.19.31:/nfs/data
+#     fstype: nfs
+#     opts: rw,sync,nfsvers=3
+#     state: present
+linux_general_mount: []
+
+# = [sub_resolve.yml] ===============================================
+
+# DNS servers.
+linux_general_dns_servers: 
+ - 1.1.1.1
+ - 8.8.8.8 
+
+# DNS search domains.
+linux_general_dns_domains: []
+
+# = [sub_selinux.yml] ===============================================
+
+# SELinux state.
+# (enforcing|permissive|disabled)
+linux_general_selinux_state: enforcing
+
+# SELinux policy.
+linux_general_selinux_policy: targeted
+
+
+# = [sub_services.yml] ===============================================
+
+# Linux systemd enable services.
+linux_general_enable_services: []
+
+# Linux systemd disable services.
+linux_general_disable_services: []
+
+# = [sub_users.yml] =================================================
+
+# Linux groups.
+# [Example]
+# linux_general_groups:
+#   - name: lale
+#     gid: 10000
+#     state: present
+linux_general_groups: []
+ 
+# Linux users.
+# [Example]
+# linux_general_users:
+#   - name: s.minato
+#     group: lale
+#     groups: []
+#     uid: 10720
+#     shell: /bin/bash
+#     home: /home/s.minato
+#     password: IamFlasher
+#     state: present
+linux_general_users: []
+
+# How to specify password string.
+# yes: Specify the hash directly.
+# no:  Specify plain text password.
+linux_general_password_style_direct_hash: no
+
+# = [sub_users.yml] =================================================
+
+# Timezone
+linux_general_timezone: UTC

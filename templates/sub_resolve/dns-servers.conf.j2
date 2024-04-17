@@ -1,0 +1,12 @@
+# =======================================
+# Network Manager Global DNS settings.
+# =======================================
+# This file is managed by Ansible.
+#
+[global-dns]
+searches={{ linux_general_dns_domains | join(",") }}
+
+{% if linux_general_dns_servers|length > 0 %}
+[global-dns-domain-*]
+servers={{ linux_general_dns_servers | join(",") }}
+{% endif %}

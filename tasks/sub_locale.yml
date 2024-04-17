@@ -1,0 +1,11 @@
+---
+- name: Check locale.
+  ansible.builtin.shell: "localectl status | grep -i {{ linux_general_locale }}"
+  register: locale_status
+  changed_when: false
+  check_mode: false
+  failed_when: locale_status.rc not in [0, 1]
+
+- name: Set locale.
+  ansible.builtin.shell: "localectl set-locale LANG={{ linux_general_locale }}"
+  when: locale_status.rc != 0

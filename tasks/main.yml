@@ -1,0 +1,24 @@
+---
+# tasks file for linux
+- name: Check OS version
+  fail:
+    msg: "This task only supports RHEL 8 or 9. Target OS is {{ ansible_distribution }} {{ ansible_distribution_major_version }}"
+  when: >
+    not (
+        ansible_distribution in linux_general_support_rhel and 
+        (ansible_distribution_major_version | int) in [8 , 9] 
+    )
+
+- name: Import RHEL8 tasks.
+  ansible.builtin.include_tasks:
+    file: comb_rhel8.yml
+  when:
+    ansible_distribution in linux_general_support_rhel and 
+    ansible_distribution_major_version | int == 8
+
+- name: Import RHEL9 tasks.
+  ansible.builtin.include_tasks:
+    file: comb_rhel9.yml
+  when: 
+    ansible_distribution in linux_general_support_rhel and 
+    ansible_distribution_major_version | int == 9

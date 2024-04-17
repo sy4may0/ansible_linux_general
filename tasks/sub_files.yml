@@ -1,0 +1,23 @@
+---
+- name: Create directories.
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: "{{ item.state }}"
+  loop: "{{ linux_general_files }}"
+
+- name: Ensure link source.
+  ansible.builtin.stat: 
+    path: "{{ item.src }}"
+  register: link_src
+  loop: "{{ linux_general_file_links }}"
+
+- name: Create links.
+  ansible.builtin.file:
+    src: "{{ item.item.src }}"
+    dest: "{{ item.item.dest }}"
+    state: "{{ item.item.state}}"
+  loop: "{{ link_src.results }}" 
+  when: item.stat.exists

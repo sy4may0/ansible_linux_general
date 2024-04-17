@@ -1,0 +1,33 @@
+---
+- name: Create groups.
+  ansible.builtin.group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid }}"
+    state: "{{ item.state }}"
+  loop: "{{ linux_general_groups }}"
+
+- name: Create users with password.
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    group: "{{ item.group }}"
+    groups: "{{ item.groups }}"
+    uid: "{{ item.uid }}"
+    shell: "{{ item.shell }}"
+    home: "{{ item.home }}"
+    password: "{{ item.password|password_hash('sha512') }}"
+    state: "{{ item.state }}"
+  loop: "{{ linux_general_users }}"
+  when: not linux_general_password_style_direct_hash
+
+- name: Create users with direct hashed password.
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    group: "{{ item.group }}"
+    groups: "{{ item.groups }}"
+    uid: "{{ item.uid }}"
+    shell: "{{ item.shell }}"
+    home: "{{ item.home }}"
+    password: "{{ item.password }}"
+    state: "{{ item.state }}"
+  loop: "{{ linux_general_users }}"
+  when: linux_general_password_style_direct_hash

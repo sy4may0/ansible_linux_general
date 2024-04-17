@@ -1,0 +1,73 @@
+---
+- name: Import locale tasks.
+  ansible.builtin.import_tasks:
+    file: sub_locale.yml
+  tags:
+    - rhel
+    - rhel_locale
+    - installation
+
+- name: Import selinux tasks.
+  ansible.builtin.import_tasks:
+    file: sub_selinux.yml
+  tags:
+    - rhel
+    - rhel_selinux
+    - installation
+
+- name: Import services tasks.
+  ansible.builtin.import_tasks:
+    file: sub_services.yml
+  tags:
+    - rhel
+    - rhel_services
+    - installation
+
+- name: Import resolve tasks.
+  ansible.builtin.import_tasks:
+    file: sub_resolve.yml
+  tags:
+    - rhel
+    - rhel_resolve
+    - installation
+
+- name: Import default_target tasks.
+  ansible.builtin.import_tasks:
+    file: sub_default_target.yml
+  tags:
+    - rhel
+    - rhel_default_target
+    - installation
+
+- name: Import files tasks.
+  ansible.builtin.import_tasks:
+    file: sub_files.yml
+  tags:
+    - rhel
+    - rhel_files
+    - installation
+
+- name: Import mount tasks.
+  ansible.builtin.import_tasks:
+    file: sub_mount.yml
+  tags:
+    - rhel
+    - rhel_mount
+    - installation
+
+- name: Import users tasks.
+  ansible.builtin.import_tasks:
+    file: sub_users.yml
+  tags:
+    - rhel
+    - rhel_users
+    - installation
+
+- name: Import timezone tasks.
+  ansible.builtin.import_tasks:
+    file: sub_timezone.yml
+  tags:
+    - rhel
+    - rhel_timezone
+    - installation
+

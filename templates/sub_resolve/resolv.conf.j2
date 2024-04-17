@@ -1,0 +1,8 @@
+# This file is managed by Ansible.
+{% for server in linux_general_dns_servers %}
+nameserver {{ server }}
+{% endfor %}
+
+{% if linux_general_dns_domains|length > 0 %}
+search {{ linux_general_dns_domains|join(' ') }}
+{% endif %}

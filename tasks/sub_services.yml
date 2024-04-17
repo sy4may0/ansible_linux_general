@@ -1,0 +1,15 @@
+---
+- name: Enable services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  loop: "{{ linux_general_enable_services }}"
+
+- name: Disable services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: no
+    state: stopped
+  loop: "{{ linux_general_disable_services }}"
+

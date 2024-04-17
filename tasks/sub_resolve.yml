@@ -1,0 +1,44 @@
+---
+- name: Check if NetworkManager runs
+  ansible.builtin.systemd:
+    name: NetworkManager
+  register: nm_status
+  check_mode: false
+
+- name: Configure NetworkManager DNS settings
+  ansible.builtin.template:
+    src: sub_resolve/dns-servers.conf.j2
+    dest: /etc/NetworkManager/conf.d/global-dns.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: nm_conf
+  when:
+    - nm_status.status.UnitFileState == "enabled" 
+    - nm_status.status.ActiveState == "active" 
+
+- name: Reload NetworkManager
+  ansible.builtin.systemd:
+    name: NetworkManager
+    state: reloaded
+  when:
+    - nm_conf is defined
+    - nm_conf.changed
+
+- name: Configure /etc/resolv.conf
+  ansible.builtin.template:
+    src: sub_resolve/resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: conf_resolv
+  when: 
+    - nm_status.status.UnitFileState == "disabled" 
+    - nm_status.status.ActiveState != "active" 
+
+
+   
+    
+
+  

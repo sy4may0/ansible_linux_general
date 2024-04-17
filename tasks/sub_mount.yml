@@ -1,0 +1,16 @@
+---
+- name: Create mount path.
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+  loop: "{{ linux_general_mount }}"
+
+- name: Mount filesystems.
+  ansible.posix.mount:
+    path: "{{ item.path }}"
+    src: "{{ item.src }}"
+    fstype: "{{ item.fstype }}"
+    opts: "{{ item.opts }}"
+    state: "{{ item.state }}"
+  loop: "{{ linux_general_mount }}"
+

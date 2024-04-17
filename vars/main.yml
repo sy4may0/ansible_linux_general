@@ -1,0 +1,6 @@
+---
+# vars file for linux_general
+linux_general_support_rhel:
+  - RedHat
+  - AlmaLinux
+  - CentOS
