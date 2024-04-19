@@ -6,7 +6,7 @@
   check_mode: false
 
 - name: Configure rsyslog conf.
-  template:
+  ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
@@ -22,7 +22,7 @@
     - rsyslog_status.status.ActiveState == "active" 
 
 - name: Configure rsyslog conf.d.
-  template:
+  ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root

@@ -1,6 +1,6 @@
 ---
 - name: Configure logrotate base config
-  template:
+  ansible.builtin.template:
     src: sub_logrotate_base/logrotate.conf.j2
     dest: /etc/logrotate.conf
     owner: root

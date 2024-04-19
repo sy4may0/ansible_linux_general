@@ -1,6 +1,6 @@
 ---
 - name: Configure cron
-  cron: 
+  ansible.builtin.cron: 
     name: "{{ item.name }}"
     minute: "{{ item.minute }}"
     hour: "{{ item.hour }}"
