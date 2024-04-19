@@ -24,7 +24,7 @@ linux_general_default_target: multi-user.target
 linux_general_locale: en_US.utf-8
 ```
 
-#### create files and directories, links
+#### Create files, directories and links
 ```yml
 # Create linux file or directory.
 # The 'mode' must be enclosed in quotes like "0655".
