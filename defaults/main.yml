@@ -110,7 +110,7 @@ linux_general_users: []
 # no:  Specify plain text password.
 linux_general_password_style_direct_hash: no
 
-# = [sub_users.yml] =================================================
+# = [sub_timezone.yml] =================================================
 
 # Timezone
 linux_general_timezone: UTC
@@ -216,3 +216,37 @@ linux_general_rsyslog_serverview: no
 #   - src: '*.*'
 #     dest: '@@192.168.39.51:514'
 linux_general_rsyslog_forward: []
+
+# =[sub_firewalld.yml] ==========================================
+
+# Permit services
+# [Example]
+# linux_general_firewalld_services:
+#   - service: http
+#     zone: public
+#     state: enabled
+linux_general_firewalld_services: []
+
+# Permit protocols
+# [Example]
+# linux_general_firewalld_protocols:
+#   - protocol: ospf
+#     zone: public
+#     state: enabled
+linux_general_firewalld_protocols: []
+
+# Permit ports
+# [Example]
+# linux_general_firewalld_ports:
+#   - port: 3128/tcp
+#     zone: public
+#     state: enabled
+linux_general_firewalld_ports: []
+
+# Rich rules
+# [Example]
+# linux_general_firewalld_rich_rules:
+#   - rich_rule: rule service name="ftp" audit limit value="1/m" accept
+#     zone: public
+#     state: enabled
+linux_general_firewalld_rich_rules: []

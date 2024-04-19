@@ -41,6 +41,7 @@
 - name: Restart rsyslog service 
   ansible.builtin.systemd:
     name: rsyslog
+    state: restarted
   when: >
    (rsyslog_conf is defined and rsyslog_conf.changed) or
    (rsyslog_conf_d is defined and rsyslog_conf_d.changed)

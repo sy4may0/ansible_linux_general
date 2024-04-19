@@ -1,0 +1,59 @@
+---
+- name: Check if firewalld runs
+  ansible.builtin.systemd:
+    name: firewalld
+  register: firewalld_status
+  check_mode: false
+
+- name: Configure firewalld
+  block:
+    - name: Permit trafic for services
+      ansible.posix.firewalld:
+        service: "{{ item.service }}"
+        permanent: true
+        zone: "{{ item.zone | default('public') }}"
+        state: "{{ item.state }}"
+      register: fwd_service
+      loop: "{{ linux_general_firewalld_services }}"
+
+    - name: Permit trafic for protocols
+      ansible.posix.firewalld:
+        protocol: "{{ item.protocol }}"
+        permanent: true
+        zone: "{{ item.zone | default('public') }}"
+        state: "{{ item.state }}"
+      register: fwd_protocol
+      loop: "{{ linux_general_firewalld_protocols }}"
+
+    - name: Permit trafic for ports
+      ansible.posix.firewalld:
+        port: "{{ item.port }}"
+        permanent: true
+        zone: "{{ item.zone | default('public') }}"
+        state: "{{ item.state }}"
+      register: fwd_port
+      loop: "{{ linux_general_firewalld_ports }}"
+
+    - name: Permit trafic by rich rules.
+      ansible.posix.firewalld:
+        rich_rule: "{{ item.rich_rule }}"
+        permanent: true
+        zone: "{{ item.zone | default('public') }}"
+        state: "{{ item.state }}"
+      register: fwd_r_rule
+      loop: "{{ linux_general_firewalld_rich_rules }}"
+
+    - name: Restart firewalld.
+      ansible.builtin.systemd:
+        name: firewalld
+        state: restarted
+      when: >
+        fwd_service.changed or
+        fwd_protocol.changed or
+        fwd_port.changed or
+        fwd_r_rule.changed
+  when:
+    - rsyslog_status.status.UnitFileState == "enabled" 
+    - rsyslog_status.status.ActiveState == "active" 
+    
+    

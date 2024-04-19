@@ -1,38 +1,266 @@
-Role Name
+Linux General
 =========
 
-A brief description of the role goes here.
+Perform initial settings for Linux.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None.
 
 Role Variables
 --------------
+Refer to the setting examples below.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+#### default.target setting
+```yml
+# Linux systemd default target.
+linux_general_default_target: multi-user.target
+```
+
+#### locale setting
+```yml
+# defaults file for rhel sub_locale.yml tasks.
+linux_general_locale: en_US.utf-8
+```
+
+#### create files and directories, links
+```yml
+# Create linux file or directory.
+# The 'mode' must be enclosed in quotes like "0655".
+# Select the 'state' value from the following.
+#  - touch:     Create an empty file if it does not exist.
+#  - directory: Create a directory if it does not exist.
+#  - absent:    Remove the file if it exists.
+linux_general_files:
+  - path: /data/cloaks
+     owner: superman
+     group: superman 
+     mode: "0755"
+     state: directory
+
+# Create linux file link.
+# Select the 'state' value from the following.
+#  - link:    Create a symbolic link if it does not exist.
+#  - hard:    Create a hard link if it does not exist.
+#  - absent:  Remove the link if it exists.
+linux_general_file_links:
+  - src: /usr/local/ext/nuclear_button.sh
+    dest: /home/d.trump/nuclear_button.sh
+    state: link
+```
+
+#### mount filesystem
+```yml
+# Linux filesystem mount settings.
+linux_general_mount:
+  - path: /data
+    src: 192.168.19.31:/nfs/data
+    fstype: nfs
+    opts: rw,sync,nfsvers=3
+    state: present
+```
+
+#### DNS lookup server setting
+```yml
+# DNS servers.
+linux_general_dns_servers: 
+ - 1.1.1.1
+ - 8.8.8.8 
+
+# DNS search domains.
+linux_general_dns_domains:
+  - localdomain
+```
+
+#### selinux setting
+```yml
+# SELinux state.
+# (enforcing|permissive|disabled)
+linux_general_selinux_state: enforcing
+
+# SELinux policy.
+linux_general_selinux_policy: targeted
+```
+
+#### Enable and Disable servicves
+```yml
+# Linux systemd enable services.
+linux_general_enable_services:
+  - smbd
+
+# Linux systemd disable services.
+linux_general_disable_services:
+  - firewalld
+  - NetworkManager
+```
+
+#### User and Group setting
+```yml
+# Linux groups.
+linux_general_groups:
+  - name: lale
+    gid: 10000
+    state: present
+ 
+# Linux users.
+linux_general_users:
+  - name: s_minato
+    group: lale
+    groups: []
+    uid: 10720
+    shell: /bin/bash
+    home: /home/s_minato
+    password: IamFlasher
+    state: present
+
+# How to specify password string.
+# yes: Specify the hash directly.
+# no:  Specify plain text password.
+linux_general_password_style_direct_hash: no
+```
+#### Timezone setting
+```yml
+# Timezone
+linux_general_timezone: UTC
+```
+#### dnf repository and install package
+```yml
+# dnf repository
+linux_general_dnf_repositories:
+  - name: MyRepo
+    url: http://192.168.39.11/dist/repo
+
+# Install packages
+linux_general_dnf_packages:
+  - name: vim
+    state: latest
+  - name: zsh
+    state: latest
+```
+
+#### sysctl kernel setting
+```yml
+# sysctl kernel parameter.
+linux_general_sysctl:
+  - name: vm.swappiness 
+    value: '5'
+    state: present
+```
+
+#### sudoers setting
+```yml
+# sudoers settings.
+linux_general_sudoers:
+  - user_alias: lale_group
+    users:
+      - s_minato
+      - i_kurokane
+      - n_krebayashi
+      - t_hatae
+    cmd_alias: debel_commands
+    commands:
+      - /usr/bin/make install
+```
+
+#### cron setting
+```yml
+# Cron task settings.
+linux_general_cron: []
+  - name: run ls command
+    weekday: "*"
+    month: "*"
+    day: "*"
+    hour: "2"
+    minute: "2"
+    job: ls -la
+    user: root
+```
+
+#### logrotate base setting
+```yml
+# Log rotation interval.
+linux_general_logrotate_interval: weekly
+# Log rotation backlog counts.
+linux_general_logrotate_backlogs: 12
+# Compress rotated log file.
+linux_general_logrotate_compress: yes
+```
+
+#### rsyslog setting
+```yml
+# rsyslog facility settings.
+linux_general_rsyslog_facilities:
+  - facility: local3
+    target: /var/log/local3.log
+    owner: root
+    group: root
+    mode: '0644'
+
+# Use rsyslog tcpserver.
+linux_general_rsyslog_tcpserver: no
+# rsyslog tcpserver port number.
+linux_general_rsyslog_tcpport: 512
+# Use rsyslog udpserver.
+linux_general_rsyslog_udpserver: yes
+# rsyslog udpserver port number.
+linux_general_rsyslog_udpport: 512
+
+# Special settings for Fujitsu ServerView
+linux_general_rsyslog_serverview: no
+
+# rsyslog log forwarding settings.
+linxu_general_rsyslog_forward:
+  - src: '*.*'
+    dest: '@@192.168.39.51:514'
+```
+
+#### firewalld setting
+```yml
+# Permit services
+linux_general_firewalld_services:
+  - service: http
+    zone: public
+    state: enabled
+
+# Permit protocols
+linux_general_firewalld_protocols:
+  - protocol: ospf
+    zone: public
+    state: enabled
+
+# Permit ports
+linux_general_firewalld_ports:
+  - port: 3128/tcp
+    zone: public
+    state: enabled
+
+# Rich rules
+linux_general_firewalld_rich_rules:
+  - rich_rule: rule service name="ftp" audit limit value="1/m" accept
+    zone: public
+    state: enabled
+```
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None.
 
 Example Playbook
 ----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yml
+- hosts: linux_servers
+  become: yes
+  roles:
+    - linux_general
+```
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+https://github.com/sy4may0
