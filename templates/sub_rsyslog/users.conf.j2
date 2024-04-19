@@ -1,0 +1,18 @@
+$umask 0000
+{% for item in linux_general_rsyslog_facilities %}
+{% if item.owner is defined %}
+$FileOwner {{ item.owner }}
+{% endif %}
+{% if item.group is defined %}
+$FileGroup {{ item.group }}
+{% endif %}
+{% if item.mode is defined %}
+$FileCreateMode {{ item.mode }}
+{% endif %}
+{{ item.facility }}.* {{ item.target }}
+{% endfor %}
+
+$FileOwner root
+$FileGroup root
+$FileCreateMode 0600
+

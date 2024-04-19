@@ -1,0 +1,12 @@
+---
+- name: Configure cron
+  cron: 
+    name: "{{ item.name }}"
+    minute: "{{ item.minute }}"
+    hour: "{{ item.hour }}"
+    day: "{{ item.day }}"
+    month: "{{ item.month }}"
+    weekday: "{{ item.weekday }}"
+    job: "{{ item.job }}"
+    user: "{{ item.user }}"
+  loop: "{{ linux_general_cron }}"

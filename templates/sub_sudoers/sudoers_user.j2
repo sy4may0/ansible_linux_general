@@ -1,0 +1,8 @@
+{% for sudo in linux_general_sudoers %}
+User_Alias {{ sudo.user_alias }} = {{ sudo.users|join(',') }}
+Cmnd_Alias {{ sudo.cmd_alias }} = {{ sudo.commands|join(',') }}
+{% endfor %}
+
+{% for sudo in linux_general_sudoers %}
+{{ sudo.user_alias }} ALL=(ALL) NOPASSWD: {{ sudo.cmd_alias }}
+{% endfor %}

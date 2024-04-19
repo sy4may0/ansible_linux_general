@@ -1,0 +1,17 @@
+---
+- name: Add dnf repositories
+  ansible.builtin.yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.name }} repository."
+    baseurl: "{{ item.url }}"
+    gpgcheck: no
+  loop: "{{ linux_general_dnf_repositories }}"
+
+- name: Install packages
+  ansible.builtin.dnf:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ linux_general_dnf_packages }}"
+  when: not ansible_check_mode
+
+

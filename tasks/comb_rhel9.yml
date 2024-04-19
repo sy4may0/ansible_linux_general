@@ -15,6 +15,14 @@
     - rhel_selinux
     - installation
 
+- name: Import sysctl tasks.
+  ansible.builtin.import_tasks:
+    file: sub_sysctl.yml
+  tags:
+    - rhel
+    - rhel_sysctl
+    - installation
+
 - name: Import services tasks.
   ansible.builtin.import_tasks:
     file: sub_services.yml
@@ -70,4 +78,45 @@
     - rhel
     - rhel_timezone
     - installation
+
+- name: Import dnf tasks.
+  ansible.builtin.import_tasks:
+    file: sub_dnf.yml
+  tags:
+    - rhel
+    - rhel_dnf
+    - installation
+
+- name: Import sudoers tasks.
+  ansible.builtin.import_tasks:
+    file: sub_sudoers.yml
+  tags:
+    - rhel
+    - rhel_sudoers
+    - installation
+
+- name: Import cron tasks.
+  ansible.builtin.import_tasks:
+    file: sub_cron.yml
+  tags:
+    - rhel
+    - rhel_cron
+    - installation
+
+- name: Import logrotate tasks.
+  ansible.builtin.import_tasks:
+    file: sub_logrotate_base.yml
+  tags:
+    - rhel
+    - rhel_logrotate
+    - installation
+
+- name: Import rsyslog tasks.
+  ansible.builtin.import_tasks:
+    file: sub_rsyslog.yml
+  tags:
+    - rhel
+    - rhel_rsyslog
+    - installation
+
 

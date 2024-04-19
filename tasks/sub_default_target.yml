@@ -1,10 +1,10 @@
 ---
-- name: Ensure default target.
+- name: Ensure default target
   ansible.builtin.shell: systemctl get-default
   changed_when: false
   check_mode: false
   register: target 
 
-- name: Set default target.
+- name: Set default target
   ansible.builtin.shell: "systemctl set-default {{ linux_general_default_target }}"
   when: target.stdout != linux_general_default_target

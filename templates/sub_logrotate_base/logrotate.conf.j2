@@ -1,0 +1,26 @@
+# This file is managed by ansible.
+# see "man logrotate" for details
+
+# global options do not affect preceding include directives
+
+# rotate log files weekly
+{{ linux_general_logrotate_interval }}
+
+# keep 4 weeks worth of backlogs
+{{ linux_general_logrotate_backlogs }}
+
+# create new (empty) log files after rotating old ones
+create
+
+# use date as a suffix of the rotated file
+dateext
+
+# uncomment this if you want your log files compressed
+{% if linux_general_logrotate_compress %}
+compress
+{% endif %}
+
+# packages drop log rotation information into this directory
+include /etc/logrotate.d
+
+# system-specific logs may be also be configured here.

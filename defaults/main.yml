@@ -95,12 +95,12 @@ linux_general_groups: []
 # Linux users.
 # [Example]
 # linux_general_users:
-#   - name: s.minato
+#   - name: s_minato
 #     group: lale
 #     groups: []
 #     uid: 10720
 #     shell: /bin/bash
-#     home: /home/s.minato
+#     home: /home/s_minato
 #     password: IamFlasher
 #     state: present
 linux_general_users: []
@@ -114,3 +114,105 @@ linux_general_password_style_direct_hash: no
 
 # Timezone
 linux_general_timezone: UTC
+
+# = [sub_yum.yml] ===================================================
+
+# dnf repository
+# [Example]
+# linux_general_dnf_repositories:
+#   - name: MyRepo
+#     url: http://192.168.39.11/dist/repo
+linux_general_dnf_repositories: []
+
+# Install packages
+# [Example]
+# linux_general_dnf_packages:
+#   - name: vim
+#     state: latest
+#   - name: zsh
+#     state: latest
+linux_general_dnf_packages: []
+
+# = [sub_sysctl.yml] ===============================================
+
+# sysctl kernel parameter.
+# [Example]
+# linux_general_sysctl:
+#   - name: vm.swappiness 
+#     value: '5'
+#     state: present
+linux_general_sysctl: []
+
+# = [sub_sudoers.yml] =============================================
+
+# sudoers settings.
+# [Example]
+# linux_general_sudoers:
+#   - user_alias: lale_group
+#     users:
+#       - s_minato
+#       - i_kurokane
+#       - n_krebayashi
+#       - t_hatae
+#     cmd_alias: debel_commands
+#     commands:
+#       - /usr/bin/make install
+linux_general_sudoers: []
+
+# = [sub_cron.yml] ===============================================
+
+# Cron task settings.
+# [Example]
+# linux_general_cron: []
+#   - name: run ls command
+#     weekday: "*"
+#     month: "*"
+#     day: "*"
+#     hour: "2"
+#     minute: "2"
+#     job: ls -la
+#     user: root
+#   - name: run kill application
+#     weekday: "*"
+#     ....
+linux_general_cron: []
+
+# = [sub_logrotate_base.yml] ======================================
+
+# Log rotation interval.
+linux_general_logrotate_interval: weekly
+# Log rotation backlog counts.
+linux_general_logrotate_backlogs: 12
+# Compress rotated log file.
+linux_general_logrotate_compress: yes
+
+# = [sub_rsyslog.yml] ============================================
+
+# rsyslog facility settings.
+# [Example]
+# linux_general_rsyslog_facilities:
+#   - facility: local3
+#     target: /var/log/local3.log
+#     owner: root
+#     group: root
+#     mode: '0644'
+linux_general_rsyslog_facilities: []
+
+# Use rsyslog tcpserver.
+linux_general_rsyslog_tcpserver: no
+# rsyslog tcpserver port number.
+linux_general_rsyslog_tcpport: 512
+# Use rsyslog udpserver.
+linux_general_rsyslog_udpserver: no
+# rsyslog udpserver port number.
+linux_general_rsyslog_udpport: 512
+
+# Special settings for Fujitsu ServerView
+linux_general_rsyslog_serverview: no
+
+# rsyslog log forwarding settings.
+# [Example]
+# linxu_general_rsyslog_forward:
+#   - src: '*.*'
+#     dest: '@@192.168.39.51:514'
+linux_general_rsyslog_forward: []
