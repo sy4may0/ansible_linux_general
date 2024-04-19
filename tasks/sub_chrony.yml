@@ -1,0 +1,36 @@
+---
+- name: Install and configure chrony
+  block:
+    - name: Install chrony
+      ansible.builtin.dnf:
+        name: chrony
+        state: latest
+  
+    - name: Enable chrony
+      ansible.builtin.systemd:
+        name: chronyd
+        enabled: yes
+        state: started
+
+    - name: Configure chrony.conf
+      ansible.builtin.template:
+        src: sub_chrony/chrony.conf.j2
+        dest: /etc/chrony.conf
+        owner: root
+        group: root
+        mode: "0644"
+        backup: yes
+      register: chrony_conf
+
+    - name: Restart chrony.
+      ansible.builtin.systemd:
+        name: chronyd
+        state: restarted
+      when: chrony_conf.changed
+
+    - name: NTP makestep
+      ansible.builtin.shell:
+        cmd: chronyc makestep
+      when: chrony_conf.changed
+
+  when: linux_general_chrony

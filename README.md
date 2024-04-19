@@ -242,6 +242,20 @@ linux_general_firewalld_rich_rules:
     state: enabled
 ```
 
+#### chrony settings
+```yml
+# Activate chrony
+linux_general_chrony: yes
+# NTP servers
+linux_general_chrony_servers:
+  - 2.almalinux.pool.ntp.org
+# NTP allow networks
+linux_general_chrony_allows:
+  - 192.168.0.0/24
+# NTP server stratum
+linux_general_chrony_stratum: 10
+```
+
 Dependencies
 ------------
 
