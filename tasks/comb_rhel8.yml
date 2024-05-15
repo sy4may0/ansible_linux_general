@@ -127,5 +127,10 @@
     - rhel_firewalld
     - configuration
 
-
-
+- name: Import chrony tasks.
+  ansible.builtin.import_tasks:
+    file: sub_chrony.yml
+  tags:
+    - rhel
+    - rhel_chrony
+    - configuration
