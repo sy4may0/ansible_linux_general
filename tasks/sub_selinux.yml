@@ -3,3 +3,18 @@
   ansible.posix.selinux:
     state: "{{ linux_general_selinux_state }}"
     policy: "{{ linux_general_selinux_policy}}"
+  register: selinux_result
+
+- name: Rebbot the server if SELinux change requires it.
+  ansible.builtin.reboot:
+    msg: "Reboot initiated by ansible becouse SELinux policy change requires it"
+  when: selinux_result.reboot_required
+  ignore_errors: true
+
+- name: Wait for the server to come back.
+  ansible.builtin.wait_for_connection:
+    timeout: 600
+  when: selinux_result.reboot_required
+
+- name: Verify the server is up
+  ansible.builtin.ping:

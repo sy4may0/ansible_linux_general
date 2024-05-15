@@ -6,6 +6,20 @@
   check_mode: false
   failed_when: locale_status.rc not in [0, 1]
 
+- name: Check installed langages.
+  ansible.builtin.shell: "localectl list-locales | grep -i {{ linux_general_locale }}"
+  register: lang_installed
+  changed_when: false
+  check_mode: false
+  failed_when: lang_installed.rc not in [0, 1]
+
+- name: Install langpack.
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ linux_general_required_langpacks }}"
+  when: lang_installed.rc != 0
+
 - name: Set locale.
   ansible.builtin.shell: "localectl set-locale LANG={{ linux_general_locale }}"
   when: locale_status.rc != 0

@@ -42,6 +42,10 @@ linux_general_file_links: []
 # defaults file for rhel sub_locale.yml tasks.
 linux_general_locale: en_US.utf-8
 
+# Required linux langpacks packages.
+linux_general_required_langpacks:
+  - glibc-langpack-en
+
 # = [sub_mount.yml] =================================================
 
 # Linux filesystem mount settings.
