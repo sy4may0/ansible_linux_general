@@ -1,10 +1,33 @@
 ---
 # defaults file for rhel
 
+# Exec tasks.
+linux_general_run_chrony: no
+linux_general_run_cron: no
+linux_general_run_default_target: no
+linux_general_run_dnf: no
+linux_general_run_files: no
+linux_general_run_firewalld: no
+linux_general_run_hostname: no
+linux_general_run_locale: no
+linux_general_run_logrotate_base: no
+linux_general_run_mount: no
+linux_general_run_resolve: no
+linux_general_run_rsyslog: no
+linux_general_run_selinux: no
+linux_general_run_services: no
+linux_general_run_sudoers: no
+linux_general_run_sysctl: no
+linux_general_run_timezone: no
+linux_general_run_users: no
+
 # = [sub_default_target.yml] =======================================
 
 # Linux systemd default target.
 linux_general_default_target: multi-user.target
+
+# = [sub_hostname.yml] =======================================
+linux_general_hostname: localhost.localdomain
 
 # = [sub_files.yml] ================================================
 
@@ -254,6 +277,16 @@ linux_general_firewalld_ports: []
 #     zone: public
 #     state: enabled
 linux_general_firewalld_rich_rules: []
+
+# Direct rules
+# [Example]
+# linux_general_firewalld_direct_rules:
+#   - priority: 1
+#     table: filter
+#     ipv: ipv4 # (ipv4|ipv6)
+#     chain: INPUT # (INPUT|OUTPUT)
+#     rule: lo -j ACCEPT
+linux_general_firewalld_direct_rules: []
 
 # =[sub_chrony.yml] ============================================
 

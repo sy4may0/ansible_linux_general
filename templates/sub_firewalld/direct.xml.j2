@@ -1,0 +1,5 @@
+<direct>
+{% for rule in linux_general_firewalld_direct_rules %}
+  <rule priority="{{ rule.priority }}" table="{{ rule.table }}" ipv="{{ rule.ipv }}" chain="{{ rule.chain }}">{{ rule.rule }}</rule>
+{% endfor %}
+</direct>

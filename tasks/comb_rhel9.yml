@@ -2,135 +2,89 @@
 - name: Import locale tasks.
   ansible.builtin.import_tasks:
     file: sub_locale.yml
-  tags:
-    - rhel
-    - rhel_locale
-    - configuration
+  when: linux_general_run_locale
 
+- name: Import locale tasks.
+  ansible.builtin.import_tasks:
+    file: sub_hostname.yml
+  when: linux_general_run_hostname
+ 
 - name: Import selinux tasks.
   ansible.builtin.import_tasks:
     file: sub_selinux.yml
-  tags:
-    - rhel
-    - rhel_selinux
-    - configuration
+  when: linux_general_run_selinux
 
 - name: Import sysctl tasks.
   ansible.builtin.import_tasks:
     file: sub_sysctl.yml
-  tags:
-    - rhel
-    - rhel_sysctl
-    - configuration
+  when: linux_general_run_sysctl
 
 - name: Import services tasks.
   ansible.builtin.import_tasks:
     file: sub_services.yml
-  tags:
-    - rhel
-    - rhel_services
-    - configuration
+  when: linux_general_run_services
 
 - name: Import resolve tasks.
   ansible.builtin.import_tasks:
     file: sub_resolve.yml
-  tags:
-    - rhel
-    - rhel_resolve
-    - configuration
+  when: linux_general_run_resolve
 
 - name: Import default_target tasks.
   ansible.builtin.import_tasks:
     file: sub_default_target.yml
-  tags:
-    - rhel
-    - rhel_default_target
-    - configuration
+  when: linux_general_run_default_target
 
 - name: Import files tasks.
   ansible.builtin.import_tasks:
     file: sub_files.yml
-  tags:
-    - rhel
-    - rhel_files
-    - configuration
+  when: linux_general_run_files
 
 - name: Import mount tasks.
   ansible.builtin.import_tasks:
     file: sub_mount.yml
-  tags:
-    - rhel
-    - rhel_mount
-    - configuration
+  when: linux_general_run_mount
 
 - name: Import users tasks.
   ansible.builtin.import_tasks:
     file: sub_users.yml
-  tags:
-    - rhel
-    - rhel_users
-    - configuration
+  when: linux_general_run_users
 
 - name: Import timezone tasks.
   ansible.builtin.import_tasks:
     file: sub_timezone.yml
-  tags:
-    - rhel
-    - rhel_timezone
-    - configuration
+  when: linux_general_run_timezone
 
 - name: Import dnf tasks.
   ansible.builtin.import_tasks:
     file: sub_dnf.yml
-  tags:
-    - rhel
-    - rhel_dnf
-    - configuration
+  when: linux_general_run_dnf
 
 - name: Import sudoers tasks.
   ansible.builtin.import_tasks:
     file: sub_sudoers.yml
-  tags:
-    - rhel
-    - rhel_sudoers
-    - configuration
+  when: linux_general_run_sudoers
 
 - name: Import cron tasks.
   ansible.builtin.import_tasks:
     file: sub_cron.yml
-  tags:
-    - rhel
-    - rhel_cron
-    - configuration
+  when: linux_general_run_cron
 
 - name: Import logrotate tasks.
   ansible.builtin.import_tasks:
     file: sub_logrotate_base.yml
-  tags:
-    - rhel
-    - rhel_logrotate
-    - configuration
+  when: linux_general_run_logrotate_base
 
 - name: Import rsyslog tasks.
   ansible.builtin.import_tasks:
     file: sub_rsyslog.yml
-  tags:
-    - rhel
-    - rhel_rsyslog
-    - configuration
+  when: linux_general_run_rsyslog
 
 - name: Import firewalld tasks.
   ansible.builtin.import_tasks:
     file: sub_firewalld.yml
-  tags:
-    - rhel
-    - rhel_firewalld
-    - configuration
+  when: linux_general_run_firewalld
 
 - name: Import chrony tasks.
   ansible.builtin.import_tasks:
     file: sub_chrony.yml
-  tags:
-    - rhel
-    - rhel_chrony
-    - configuration
+  when: linux_general_run_chrony

@@ -11,6 +11,28 @@ None.
 Role Variables
 --------------
 Refer to the setting examples below.
+### Task run setting
+```yml
+# Exec tasks.
+linux_general_run_chrony: yes
+linux_general_run_cron: no
+linux_general_run_default_target: no
+linux_general_run_dnf: no
+linux_general_run_files: no
+linux_general_run_firewalld: yes
+linux_general_run_hostname: yes
+linux_general_run_locale: yes
+linux_general_run_logrotate_base: no
+linux_general_run_mount: no
+linux_general_run_resolve: no
+linux_general_run_rsyslog: yes
+linux_general_run_selinux: no
+linux_general_run_services: no
+linux_general_run_sudoers: yes
+linux_general_run_sysctl: no
+linux_general_run_timezone: no
+linux_general_run_users: yes
+```
 
 #### default.target setting
 ```yml

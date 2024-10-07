@@ -43,6 +43,17 @@
       register: fwd_r_rule
       loop: "{{ linux_general_firewalld_rich_rules }}"
 
+    - name: Configure firewalld direct rules.
+      ansible.builtin.template:
+        src: sub_firewalld/direct.xml.j2
+        dest: /etc/firewalld/direct.xml
+        owner: root
+        group: root
+        mode: "0644"
+        backup: yes
+      register: fwd_d_rule
+      when: (linux_general_firewalld_direct_rules|length>0)
+
     - name: Restart firewalld.
       ansible.builtin.systemd:
         name: firewalld
@@ -51,9 +62,10 @@
         fwd_service.changed or
         fwd_protocol.changed or
         fwd_port.changed or
-        fwd_r_rule.changed
+        fwd_r_rule.changed or
+        fwd_d_rule.changed
   when:
-    - rsyslog_status.status.UnitFileState == "enabled" 
-    - rsyslog_status.status.ActiveState == "active" 
+    - firewalld_status.status.UnitFileState == "enabled" 
+    - firewalld_status.status.ActiveState == "active" 
     
     
